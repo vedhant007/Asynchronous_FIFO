@@ -10,7 +10,7 @@ module FIFOmem(input [7:0]wdata,input wclken,wclk,wfull,input [22:0]waddr,raddr,
   
 endmodule
 
-module FIFO_wblock(input winc,wclk,wrst_n,output  [22:0]waddr,output  [23:0]wptr,wq2_rptr,output reg wfull);//wptr has one extra bit for checking full and empty condition
+module FIFO_wblock(input winc,wclk,wrst_n,output  [22:0]waddr,input [23:0]wq2_rptr,output  [22:0]waddr,output reg wfull);//wptr has one extra bit for checking full and empty condition
 
 
 reg [23:0]wbin;
