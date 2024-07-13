@@ -61,6 +61,34 @@ wire rempty_val;
  rempty<=rempty_val;
  end
  end
+ 
+module sync_r2w(input wclk,wrst_n,input [23:0]rptr, output reg [23:0]  wq2_rptr); 
+reg [23:0] wq1_rptr;
+always @(posedge wclk or negedge wrst_n) begin
+if(!wrst_n)begin
+wq2_rptr<=0;
+wq1_rptr<=0;
+end
+else begin
+wq1_rptr<=rptr;
+wq2_rptr<=wq1_rptr;
+end
+end
+endmodule
+module sync_w2r(input rclk,rrst_n,input [23:0]wptr, output reg [23:0]  rq2_rptr); 
+reg [23:0] rq1_rptr;
+always @(posedge rclk or negedge rrst_n) begin
+if(!rrst_n)begin
+rq2_rptr<=0;
+rq1_rptr<=0;
+end
+else begin
+rq1_rptr<=wptr;
+rq2_rptr<=rq1_rptr;
+end
+end
+endmodule
+
 
 endmodule
 
