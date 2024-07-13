@@ -88,7 +88,22 @@ rq2_rptr<=rq1_rptr;
 end
 end
 endmodule
+//top module
+ 
+module asynFIFO(input [7:0] wdata,input wclk,winc,wrst_nrinc,rclk,rrst_n,output [7:0]rdata,output wfull,rempty);
+wire [22:0]s_waddr, s_raddr;
+wire [23:0]s_wptr,s_rq2_wptr,s_rptr,s_wq2_rptr;
+wire s_rempty,s_wfull,s_wclken;
 
+sync_r2w r2w_sync(wclk,wrst_n,s_rptr, s_wq2_rptr); 
+sync_w2r w2r_sync(rclk,rrst_n,s_wptr, s_rq2_rptr); 
+FIFO_wblock write_block(winc,wclk,wrst_n,s_wq2_rptr,s_waddr,s_wptr,s_wfull);
+FIFO_rblock read_block(rinc,rclk,rrst_n,s_rq2_wptr,s_raddr,s_rptr,s_rempty);
+FIFOmem memory_block(wdata,s_wclken,wclk,s_wfull,s_waddr,s_raddr,rdata);
+assign s_wclken=winc & ~wfull;
+assign wfull=s_wfull;
+assign rempty=s_rempty;
+endmodule
 
 endmodule
 
