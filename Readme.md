@@ -36,3 +36,7 @@ Since we have to detect at earliest the the fifo is full or empty , so for full 
 // benfit of memory double size.
 // when wfull==1 we will not send data from sender module and we will wait till reading is happening and when reading is done we will set wfull=0
 //but we have selected fifo depth accordingly so why should we need an extra bit??
+corrected full ocndition xor operation is not correct used && can check
+taking wbin_next signal as it is considered good practice in sequential circuit.
+
+write block done now i will write read block, read block done was similary to write block.
