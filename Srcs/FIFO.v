@@ -34,3 +34,34 @@ if(!wrst_n) wfull<=1'b0;
 else wfull<= wfull_val;
 end
 endmodule
+
+// read block
+module read_block(input rinc,rclk,rrst_n,input [23:0] rq2_wptr,output [22:0]raddr,output  [23:0] rptr,output reg rempty);
+reg [23:0]rbin;
+wire [23:0]rbin_next;
+wire rempty_val;
+ always @(posedge rclk or negedge rrst_n)begin
+ if(!rrst_n) begin
+ rbin<=24'b0;
+ end
+ else if(rinc && ~rempty ) begin
+ rbin<=rbin_next;
+ end
+ 
+ end
+ assign rbin_next=rbin+1;
+ assign raddr= rbin[22:0];
+ assign rptr=rbin;
+ assign rempty_val= (rbin_next[23:0]==rq2_wptr[23:0]); 
+ always @(posedge rclk or negedge rrst_n)begin
+ if(!rrst_n)begin
+ rempty<=1'b1;
+ end 
+ else begin
+ rempty<=rempty_val;
+ end
+ end
+
+endmodule
+
+
