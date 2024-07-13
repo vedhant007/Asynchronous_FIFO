@@ -22,3 +22,17 @@ and we have to also generate wfull conditions
 
 WHY WE ARE GENERATING  WFULL CONDITION IN WRITE BLOCK AND R FULL CONDITION IN READ BLOCK?
 Since we have to detect at earliest the the fifo is full or empty , so for full condition when wprt is equal to rpt and msp is not equal then it is full, and when fifo is empty if rpts is equal to wptr and msb are equal a rclk.
+//wfull<=1'b1; we cannot put wfull inside this as for wfull read and write pointer should be
+// at equal location, if the are not it doesn't matter if the pointer has wrapped or not write 
+//operation will keep on happening so we can simply inc one bit and increment it and when msb is 1 it means it has wrapped one time
+
+// wfull is cannot be attached to wptr, as wfull is different condition we will take 
+//wptr as addr size+1 and inc it, when it has wrapped it 01111 lets say is last memory on ram,
+// then next will be 10000 right and that 1 will indicate wrapping and if last bits are equal 
+//to read last bits then its full execpt msb and wfull will happen when rptr and wptr is equal except msb
+//as rptr=1 and wptr =0 will not happend as wspeed is > than rpspeed always thats why fifo is reqd
+//what about if it is wraped
+// 1 bit extra can help us in reducing memory buffer and help us use fifo in sort of continuous manner and take 
+// benfit of memory double size.
+// when wfull==1 we will not send data from sender module and we will wait till reading is happening and when reading is done we will set wfull=0
+//but we have selected fifo depth accordingly so why should we need an extra bit??
