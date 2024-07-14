@@ -3,6 +3,12 @@ In this repository, I will document my journey in creating an asynchronous FIFO 
 This is the block diagram of asynchronous FIFO.
 ![image](https://github.com/vedhant007/Asynchronous_FIFO/assets/66167443/3065754f-1c71-4cc8-8d9c-10595704741d)
 
+
+
+ I am writing all this just for my understanding and for dumping my brain trash here for better clarity and thinking so ignore all of the below.
+
+
+ 
 I will make this FIFO in phases. 
 1) memory block
 2) write pointer and full write address generating block
